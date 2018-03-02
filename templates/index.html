@@ -146,16 +146,28 @@ div.tooltip {
 		              "translate(" + margin.left + "," + margin.top + ")");
 		
 		// Get the data
-		d3.csv("data/activity.csv", function(error, data) {
+		d3.csv("data/data.csv", function(error, data) {
 		    data.forEach(function(d) {
-		        d.day = Number(d.day);
+		        d.timestamp = d.timestamp;
+		        d.activity_name = d.activity_name;
 		        d.confidence = Number(d.confidence);
+		        d.name = d.name;
+		        d.morning = d.morning;
+		        d.afternoon = d.afternoon;
+		        d.night = d.night;
+		        d.latitude = Number(d.latitude);
+		        d.longitude = Number(d.longitude);
+		        d.bearing = Number(d.bearing);
+		        d.speed = Number(d.speed);
+		        d.altitude = Number(d.altitude);
+		        d.provider = d.provider;
+		        d.accuracy = Number(d.accuracy);
 				console.log('d.date: ' + d.day + ', d.close: ' + d.confidence);
 		    });
 		
 		    // Scale the range of the data
-		    x.domain(d3.extent(data, function(d) { return d.date; }));
-		    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+		    x.domain(d3.extent(data, function(d) { return d.day; }));
+		    y.domain([0, d3.max(data, function(d) { return d.confidence; })]);
 		
 		    // Add the valueline path.
 		    svg.append("path")
