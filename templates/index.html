@@ -114,7 +114,7 @@ div.tooltip {
 		    height = 270 - margin.top - margin.bottom;
 		
 		// Parse the date / time
-		var parseDate = d3.timeParse("%d-%b-%y");
+		var parseDate = d3.timeParse("%y-%b-%d %h:%m:%s");
 		var formatTime = d3.timeFormat("%e %B");
 		
 		// Set the x and y ranges
@@ -146,11 +146,11 @@ div.tooltip {
 		              "translate(" + margin.left + "," + margin.top + ")");
 		
 		// Get the data
-		d3.csv("css/walk.csv", function(error, data) {
+		d3.csv("data/activity.csv", function(error, data) {
 		    data.forEach(function(d) {
-		        d.date = parseDate(d.date);
-		        d.close = +d.close;
-				console.log('d.date: ' + d.date + ', d.close: ' + d.close);
+		        d.day = Number(d.day);
+		        d.confidence = Number(d.confidence);
+				console.log('d.date: ' + d.day + ', d.close: ' + d.confidence);
 		    });
 		
 		    // Scale the range of the data
@@ -199,7 +199,7 @@ div.tooltip {
 
 	
 	/*  Code for the bar chart, remove the surrounding comment markers to display.
-		When doing so, be sure to delete this text and comment out the above chart
+		When doing so, be sure to delete this text and comment out the above chart 
 		
 		
 		var bar_svg = d3.select("svg").attr("width", 1200).attr("height", 1200),
@@ -248,8 +248,8 @@ div.tooltip {
 		      .attr("y", function(d) { return y(d.Year); })
 		      .attr("width", x.bandwidth())
 		      .attr("height", function(d) { return height - y(d.Year); });
-		}); */ 
-		//End bar chart code
+		}); 
+		//End bar chart code */
 		
 	}); //End document ready			   
 </script>
