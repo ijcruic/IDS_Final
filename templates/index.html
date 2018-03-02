@@ -146,7 +146,7 @@ div.tooltip {
 		              "translate(" + margin.left + "," + margin.top + ")");
 		
 		// Get the data
-		d3.csv("data/data.csv", function(error, data) {
+		d3.csv("css/data.csv", function(error, data) {
 		    data.forEach(function(d) {
 		        d.timestamp = d.timestamp;
 		        d.activity_name = d.activity_name;
@@ -162,7 +162,7 @@ div.tooltip {
 		        d.altitude = Number(d.altitude);
 		        d.provider = d.provider;
 		        d.accuracy = Number(d.accuracy);
-				console.log('d.date: ' + d.day + ', d.close: ' + d.confidence);
+				console.log('d.day: ' + d.day + ', d.confidence: ' + d.confidence);
 		    });
 		
 		    // Scale the range of the data
@@ -179,13 +179,13 @@ div.tooltip {
 		        .data(data)			
 		    .enter().append("circle")								
 		        .attr("r", 5)		
-		        .attr("cx", function(d) { return x(d.date); })		 
-		        .attr("cy", function(d) { return y(d.close); })		
+		        .attr("cx", function(d) { return x(d.day); })		 
+		        .attr("cy", function(d) { return y(d.confidence); })		
 		        .on("mouseover", function(d) {		
 		            div.transition()		
 		                .duration(200)		
 		                .style("opacity", .9);		
-		            div	.html(formatTime(d.date) + "<br/>"  + d.close)	
+		            div	.html(formatTime(d.day) + "<br/>"  + d.confidence)	
 		                .style("left", (d3.event.pageX) + "px")		
 		                .style("top", (d3.event.pageY - 28) + "px");	
 		            })					
