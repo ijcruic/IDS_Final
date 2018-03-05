@@ -86,7 +86,17 @@
 
       <div class="page-header">
 	<h2>Is the data correct?</h2>
-		<p>
+		<p> Generally speaking the data is correct, however, it should be noted that conclusions drawn from it
+		may not be generalizable, as the data only has one subject - me. When cleaning the data, there were no corrupted or 
+		incorrect data entries that had to be corrected. Data cleaning only focused on validating coherence and completeness of the data. 
+		
+		To answer the questions of determining the differences in activity between time and location, I binned the locations and times.
+		For the locations, there were only two main locations of interest - home and not home, and so the locations were binned into
+		either Pittsburgh or Chicago. The times were binned into 3 different categories for two reasons. First, the times of morning, afternoon,
+		and night, generally have qualitative differences in the activities that I do, and so should be better reflected in the activity
+		recognition data. And, second, data is typically only uploaded by the AWARE framework when I came into contact with a WiFi point,
+		which may only happen during certain periods of the day. So, to smooth these timestamps, I choose a broader, three-label definition
+		of time.
 		</p>
       </div>
 
