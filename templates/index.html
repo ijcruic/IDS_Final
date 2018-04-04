@@ -105,7 +105,7 @@ div.tooltip {
     <script src="js/bootstrap.min.js"></script> 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
-    	
+    $( document ).ready(function(){
     	
 		/*Start date/time hover graph code*/
 		
@@ -148,23 +148,11 @@ div.tooltip {
 		              "translate(" + margin.left + "," + margin.top + ")");
 		
 		// Get the data
-		d3.csv("css/data.csv", function(error, data) {
+		d3.csv("css/walk.csv", function(error, data) {
 		    data.forEach(function(d) {
-		        d.timestamp = d.timestamp;
-		        d.activity_name = d.activity_name;
-		        d.confidence = Number(d.confidence);
-		        d.name = d.name;
-		        d.morning = d.morning;
-		        d.afternoon = d.afternoon;
-		        d.night = d.night;
-		        d.latitude = Number(d.latitude);
-		        d.longitude = Number(d.longitude);
-		        d.bearing = Number(d.bearing);
-		        d.speed = Number(d.speed);
-		        d.altitude = Number(d.altitude);
-		        d.provider = d.provider;
-		        d.accuracy = Number(d.accuracy);
-				console.log('d.day: ' + d.day + ', d.confidence: ' + d.confidence);
+		        d.date = parseDate(d.date);
+		        d.close = +d.close;
+				console.log('d.date: ' + d.date + ', d.close: ' + d.close);
 		    });
 		
 		    // Scale the range of the data
@@ -263,10 +251,10 @@ div.tooltip {
 		      .attr("y", function(d) { return y(d.Year); })
 		      .attr("width", x.bandwidth())
 		      .attr("height", function(d) { return height - y(d.Year); });
-		}); 
+		}); */
 		//End bar chart code
 		
-	}); //End document ready	*/   
+	}); //End document ready   
 </script> 
 </body>
 </html>
