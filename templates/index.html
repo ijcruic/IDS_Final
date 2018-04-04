@@ -52,42 +52,7 @@
       <div class="page-header">
 	
       </div> <!-- /page-header -->
-    
-    
-    <div class='tableauPlaceholder' id='viz1520283076524' style='position: relative'>
-    	<noscript>
-    		<a href='#'>
-    			<img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;by&#47;byte3_1&#47;Dashboard1&#47;1_rss.png' style='border: none' />
-    		</a>
-    	</noscript>
-    	<object class='tableauViz'  style='display:none;'>
-    		<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
-    		<param name='embed_code_version' value='3' /> <param name='site_root' value='' />
-    		<param name='name' value='byte3_1&#47;Dashboard1' /><param name='tabs' value='no' />
-    		<param name='toolbar' value='yes' />
-    		<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;by&#47;byte3_1&#47;Dashboard1&#47;1.png' /> 
-    		<param name='animate_transition' value='yes' />
-    		<param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' />
-    		<param name='display_overlay' value='yes' />
-    		<param name='display_count' value='yes' />
-    	</object>
-    </div>                
-    <script type='text/javascript'>                    
-    	var divElement = document.getElementById('viz1520283076524');                    
-    	var vizElement = divElement.getElementsByTagName('object')[0];                    
-    	vizElement.style.width='1000px';vizElement.style.height='827px';                    
-    	var scriptElement = document.createElement('script');                    
-    	scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
-    	vizElement.parentNode.insertBefore(scriptElement, vizElement);                
-    </script>
-	    
-	    <div class="footer">
-		  <p>
-			For the visualization, I choose a Treemap to highlight the relative differences in activity between location. 
-			A Treemap allows for a quick comparison of the quantities composing two items. I also choose a consistent color
-			scheme between the two treemaps so that it is easier to see what quantities are high and low in the two. 
-		  </p>
-	    </div>
+
 	</div> <!-- /container -->
 
 <svg></svg>
@@ -140,135 +105,9 @@ div.tooltip {
     <script src="js/bootstrap.min.js"></script> 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
-   /* $( document ).ready(function() {
-    	
-    	/*Interactive Bar Chart 
-    	
-  		  	
-  		var margin = {top: 80, right: 180, bottom: 80, left: 180},
-		    width = 960 - margin.left - margin.right,
-		    height = 500 - margin.top - margin.bottom;
-		
-		var svg = d3.select("body").append("svg")
-			.attr("width", width + margin.left + margin.right)
-		    .attr("height", height + margin.top + margin.bottom)
-			.append("g")
-		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		
-		d3.csv("css/data.csv", function(error, data){
-		
-			// Get every column value
-			var elements = Object.keys(data[0])
-				.filter(function(d){
-					return ((d != "timestamp") & (d != "confidence"));
-				});
-			var selection = elements[0];
-		
-			var y = d3.scale.linear()
-					.domain([0, d3.max(data, function(d){
-						return +d[selection];
-					})])
-					.range([height, 0]);
-		
-			var x = d3.scale.ordinal()
-					.domain(data.map(function(d){ return d.State;}))
-					.rangeBands([0, width]);
-		
-		
-			var xAxis = d3.svg.axis()
-				.scale(x)
-			    .orient("bottom");
-		
-			var yAxis = d3.svg.axis()
-				.scale(y)
-			    .orient("left");
-		
-			svg.append("g")
-		    	.attr("class", "x axis")
-		    	.attr("transform", "translate(0," + height + ")")
-		    	.call(xAxis)
-		    	.selectAll("text")
-		    	.style("font-size", "8px")
-		      	.style("text-anchor", "end")
-		      	.attr("dx", "-.8em")
-		      	.attr("dy", "-.55em")
-		      	.attr("transform", "rotate(-90)" );
-		
-		
-		 	svg.append("g")
-		    	.attr("class", "y axis")
-		    	.call(yAxis);
-		
-			svg.selectAll("rectangle")
-				.data(data)
-				.enter()
-				.append("rect")
-				.attr("class","rectangle")
-				.attr("width", width/data.length)
-				.attr("height", function(d){
-					return height - y(+d[selection]);
-				})
-				.attr("x", function(d, i){
-					return (width / data.length) * i ;
-				})
-				.attr("y", function(d){
-					return y(+d[selection]);
-				})
-				.append("title")
-				.text(function(d){
-					return d.State + " : " + d[selection];
-				});
-		
-			var selector = d3.select("#drop")
-		    	.append("select")
-		    	.attr("id","dropdown")
-		    	.on("change", function(d){
-		        	selection = document.getElementById("dropdown");
-		
-		        	y.domain([0, d3.max(data, function(d){
-						return +d[selection.value];})]);
-		
-		        	yAxis.scale(y);
-		
-		        	d3.selectAll(".rectangle")
-		           		.transition()
-			            .attr("height", function(d){
-							return height - y(+d[selection.value]);
-						})
-						.attr("x", function(d, i){
-							return (width / data.length) * i ;
-						})
-						.attr("y", function(d){
-							return y(+d[selection.value]);
-						})
-		           		.ease("linear")
-		           		.select("title")
-		           		.text(function(d){
-		           			return d.State + " : " + d[selection.value];
-		           		});
-		      
-		           	d3.selectAll("g.y.axis")
-		           		.transition()
-		           		.call(yAxis);
-		
-		         });
-		
-		    selector.selectAll("option")
-		      .data(elements)
-		      .enter().append("option")
-		      .attr("value", function(d){
-		        return d;
-		      })
-		      .text(function(d){
-		        return d;
-		      })
-		
-		
-		});
     	
     	
-    	
-		/* Start date/time hover graph code
+		/*Start date/time hover graph code*/
 		
 		
 		// Set the dimensions of the canvas / graph
@@ -370,7 +209,7 @@ div.tooltip {
 		        .call(yAxis);
 		});
 		//End date/time hover graph
-		*/
+		
 		
 
 	

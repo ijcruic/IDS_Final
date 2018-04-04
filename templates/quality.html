@@ -46,58 +46,26 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
 	<h1>Quality: About This Data Set</h1>
-        <p>This data set consists of Google activity recognition data and location data taken from a Samsung Android phone using the 
-        <a href="http://www.awareframework.com/">AWARE Framework</a>. Data was collected from 2/17/2018 to 3/4/2018.
-        </a></p>
+        <p>TBD</p>
       </div>
 
     
       <div class="page-header">
 	<h2>Is the data complete?</h2>
-		<p> The data is, unfortunately not complete. First, looking at a plot of the data values over time reveals a period of missed
-		data collection
-		</p>
-		<img src="templates/activity_accuracy.png" alt="Mountain View", style="max-width:70%">
-		<p> Sometime during the 19th of February, the SQL database lost the account that the AWARE framework was using to access the database and 
-		store collected data. It took until the 24th of Febrauary for me to realize the issue and correct it, so all of the data
-		between those dates was lost. Despite this lost data, there is data while I was on vacation in Chicago and data while at work
-		back in Pittsburgh, so there is data available to answer the question of there being differences in activity, as recognized by the
-		phione between vacation and work. 
+		<p> TBD
 		</p>
 		
       </div>
       
       <div class="page-header">
 	<h2>Is the data coherent?</h2>
-		<p> To investigate data coherence, I first turned to making sure the locations that were collected were collect. Below is a geo 
-		plot of all the collected coordinates:
+		<p> TBD
 		</p>
-		<img src="templates/locations.png" alt="Mountain View", style="max-width:70%">
-		<p> From a visual insepction of all the location coordinates, they do all appear in either Chicago and Pittsburgh, which is
-		consistent with what was expected from data collection. I then looked at the distribution of activities predicted by the Google
-		activity prediction plug in to see if the activities predicted make sense:
-		</p>
-		<img src="templates/activity.png" alt="Mountain View", style="max-width:70%">
-		<p>Once again the data makes sense, as still has the greatest count and the other much less, since most of the time I am not moving with my phone
-		(I work at a desk for around 8 hours a day, and sleep between 6-8 hours a night). There are a fair number of unknown instances
-		where the Google plug in could not identify what activity was taking place. This data represents some bad data in this case, as it cannot be reliably
-		mapped to any activity category, but it also does not appear to detract from the expected distribution of activities.
-	        </p>
       </div>
 
       <div class="page-header">
 	<h2>Is the data correct?</h2>
-		<p> Generally speaking the data is correct, however, it should be noted that conclusions drawn from it
-		may not be generalizable, as the data only has one subject - me. When cleaning the data, there were no corrupted or 
-		incorrect data entries that had to be corrected. Data cleaning only focused on validating coherence and completeness of the data. 
-		
-		To answer the questions of determining the differences in activity between time and location, I binned the locations and times.
-		For the locations, there were only two main locations of interest - home and not home, and so the locations were binned into
-		either Pittsburgh or Chicago. The times were binned into 3 different categories for two reasons. First, the times of morning, afternoon,
-		and night, generally have qualitative differences in the activities that I do, and so should be better reflected in the activity
-		recognition data. And, second, data is typically only uploaded by the AWARE framework when I came into contact with a WiFi point,
-		which may only happen during certain periods of the day. So, to smooth these timestamps, I choose a broader, three-label definition
-		of time.
+		<p> TBD
 		</p>
       </div>
 
