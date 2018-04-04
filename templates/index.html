@@ -165,6 +165,7 @@ rect {
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script> 
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="templates/d3-tip.js"></script>
     <script>
     $( document ).ready(function(){
     	
@@ -180,20 +181,16 @@ rect {
 		    width = outerWidth - margin.left - margin.right,
 		    height = outerHeight - margin.top - margin.bottom;
 		
-		var x = d3.scale.linear()
+		var x = d3.scaleLinear()
 		    .range([0, width]).nice();
 		
-		var y = d3.scale.linear()
+		var y = d3.scaleLinear()
 		    .range([height, 0]).nice();
 		
-		var xAxis = d3.svg.axis()
-		    .scale(x)
-		    .orient("bottom")
+		var xAxis = d3.axisBottom(x)
 		    .tickSize(-height);
 		
-		var yAxis = d3.svg.axis()
-		    .scale(y)
-		    .orient("left")
+		var yAxis = d3.axisLeft(y)
 		    .tickSize(-width);
 		
 		var xCat = "gowers_x",
@@ -233,8 +230,8 @@ rect {
 		        d.Election = d.Election;
 		        d.Profession = d.Profession;
 		        d.Gender = d.Gender;
-		        d.Facebook = URL(d.Facebook);
-		        d.Twitter = URL(d.Twitter);
+		        d.Facebook = d.Facebook;
+		        d.Twitter = d.Twitter;
 		    });
 		
 		    var xMax = d3.max(data, function(d) {
@@ -254,7 +251,7 @@ rect {
 		    x.domain([xMin, xMax]);
 		    y.domain([yMin, yMax]);
 		
-		    var color = d3.scale.category10();
+		    var color = d3.scaleOrdinal(d3.schemeCategory10);
 		
 		    var tip = d3.tip()
 		        .attr("class", "d3-tip")
@@ -263,7 +260,7 @@ rect {
 		            return labels[xCat] + ": " + d[xCat] + "<br>" + labels[yCat] + ": " + d[yCat];
 		        });
 		
-		    var zoomBeh = d3.behavior.zoom()
+		    var zoomBeh = d3.zoom()
 		        .x(x)
 		        .y(y)
 		        .scaleExtent([0, 1000])
@@ -453,7 +450,7 @@ rect {
 		        x.domain([xMin, xMax]);
 		        y.domain([yMin, yMax]);
 		
-		        var zoomBeh = d3.behavior.zoom()
+		        var zoomBeh = d3.zoom()
 		            .x(x)
 		            .y(y)
 		            .scaleExtent([0, 1000])
