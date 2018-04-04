@@ -96,6 +96,67 @@ div.tooltip {
   fill: orange;
 }
 /* End styles for bar chart*/
+
+/* Styles for Interactive Scatter Plot */
+body {
+  /*margin: 0;*/
+  font-family: arial, sans;
+}
+
+rect {
+  fill: transparent;
+  shape-rendering: crispEdges;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  shape-rendering: crispEdges;
+}
+
+.axisLine {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 2px;
+}
+
+.dot {
+  fill-opacity: .5;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+/* End styles for Interactive Scatter Plot*/
+
 </style>
 
     <!-- Bootstrap core JavaScript
@@ -107,7 +168,330 @@ div.tooltip {
     <script>
     $( document ).ready(function(){
     	
-		/*Start date/time hover graph code*/
+    	/*Start interactive scatter plot*/
+    	var margin = {
+		        top: 20,
+		        right: 210,
+		        bottom: 50,
+		        left: 70
+		    },
+		    outerWidth = 1050,
+		    outerHeight = 500,
+		    width = outerWidth - margin.left - margin.right,
+		    height = outerHeight - margin.top - margin.bottom;
+		
+		var x = d3.scale.linear()
+		    .range([0, width]).nice();
+		
+		var y = d3.scale.linear()
+		    .range([height, 0]).nice();
+		
+		var xAxis = d3.svg.axis()
+		    .scale(x)
+		    .orient("bottom")
+		    .tickSize(-height);
+		
+		var yAxis = d3.svg.axis()
+		    .scale(y)
+		    .orient("left")
+		    .tickSize(-width);
+		
+		var xCat = "gowers_x",
+		    yCat = "gowers_y",
+		    rCat = 1.0,
+		    colorCat = "gower_mean shift";
+		
+		var labels = {
+		    "Age": "Age",
+		    "Committee": "Committee",
+		    "Education": "Education",
+		    "Election": "Election",
+		    "Profession": "Profession",
+		    "Gender": "Gender",
+		    "Facebook": "Facebook",
+		    "Twitter": "Twitter"
+		};
+		
+		d3.csv("css/convocation_3.csv", function(data) {
+		    data.forEach(function(d) {
+		        d.Parliamentarian = d.Parliamentarian;
+		        d.gowers_mean_shift = Number(d.gowers_mean_shift);
+		        d.gowers_gmm = Number(d.gowers_gmm);
+		        d.gowers_x = Number(d.gowers_x);
+		        d.gowers_y = Number(d.gowers_y);
+		        d.jaccard_mean_shift = Number(d.jaccard_mean_shift);
+		        d.jaccard_gmm = Number(d.jaccard_gmm);
+		        d.jaccard_x = Number(d.jaccard_x);
+		        d.jaccard_y = Number(d.jaccard_y);
+		        d.hamming_mean_shift = Number(d.hamming_mean_shift);
+		        d.hamming_gmm = Number(d.hamming_gmm);
+		        d.hamming_x = Number(d.hamming_x);
+		        d.hamming_y = Number(d.hamming_y);
+		        d.Age = Number(d.Age);
+		        d.Committee = d.Committee;
+		        d.Education = d.Education;
+		        d.Election = d.Election;
+		        d.Profession = d.Profession;
+		        d.Gender = d.Gender;
+		        d.Facebook = URL(d.Facebook);
+		        d.Twitter = URL(d.Twitter);
+		    });
+		
+		    var xMax = d3.max(data, function(d) {
+		            return d[xCat];
+		        }) * 1.05,
+		        xMin = d3.min(data, function(d) {
+		            return d[xCat];
+		        }),
+		        xMin = xMin > 0 ? 0 : xMin,
+		        yMax = d3.max(data, function(d) {
+		            return d[yCat];
+		        }) * 1.05,
+		        yMin = d3.min(data, function(d) {
+		            return d[yCat];
+		        }),
+		        yMin = yMin > 0 ? 0 : yMin;
+		    x.domain([xMin, xMax]);
+		    y.domain([yMin, yMax]);
+		
+		    var color = d3.scale.category10();
+		
+		    var tip = d3.tip()
+		        .attr("class", "d3-tip")
+		        .offset([-10, 0])
+		        .html(function(d) {
+		            return labels[xCat] + ": " + d[xCat] + "<br>" + labels[yCat] + ": " + d[yCat];
+		        });
+		
+		    var zoomBeh = d3.behavior.zoom()
+		        .x(x)
+		        .y(y)
+		        .scaleExtent([0, 1000])
+		        .on("zoom", zoom);
+		
+		    var svg = d3.select("#scatter")
+		        .append("svg")
+		        .attr("width", outerWidth)
+		        .attr("height", outerHeight)
+		        .append("g")
+		        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		        .call(zoomBeh);
+		    svg.call(tip);
+		    svg.append("rect")
+		        .attr("width", width)
+		        .attr("height", height);
+		    svg.append("g")
+		        .classed("x axis", true)
+		        .attr("transform", "translate(0," + height + ")")
+		        .call(xAxis)
+		        .append("text")
+		        .classed("label", true)
+		        .attr("x", width)
+		        .attr("y", margin.bottom - 10)
+		        .style("text-anchor", "end")
+		        .text("Age");
+		    svg.append("g")
+		        .classed("y axis", true)
+		        .call(yAxis)
+		        .append("text")
+		        .classed("label", true)
+		        .attr("transform", "rotate(-90)")
+		        .attr("y", -margin.left)
+		        .attr("dy", "1.5em")
+		        .style("text-anchor", "end")
+		        .text("Probability of Mortality");
+		
+		    var objects = svg.append("svg")
+		        .classed("objects", true)
+		        .attr("width", width)
+		        .attr("height", height);
+		    objects.append("svg:line")
+		        .classed("axisLine hAxisLine", true)
+		        .attr("x1", 0)
+		        .attr("y1", 0)
+		        .attr("x2", width)
+		        .attr("y2", 0)
+		        .attr("transform", "translate(0," + height + ")");
+		    objects.append("svg:line")
+		        .classed("axisLine vAxisLine", true)
+		        .attr("x1", 0)
+		        .attr("y1", 0)
+		        .attr("x2", 0)
+		        .attr("y2", height);
+		    objects.selectAll(".dot")
+		        .data(data)
+		        .enter().append("circle")
+		        .classed("dot", true)
+		        .attr({
+		            r: function(d) {
+		                return 4 * Math.sqrt(d[rCat] / Math.PI);
+		            },
+		            cx: function(d) {
+		                return x(d[xCat]);
+		            },
+		            cy: function(d) {
+		                return y(d[yCat]);
+		            }
+		        })
+		    .style("fill", function(d) {
+		        return color(d[colorCat]);
+		    })
+		        .on("mouseover", tip.show)
+		        .on("mouseout", tip.hide);
+		
+		    var legend = svg.selectAll(".legend")
+		        .data(color.domain())
+		        .enter().append("g")
+		        .classed("legend", true)
+		        .attr("transform", function(d, i) {
+		            return "translate(0," + i * 20 + ")";
+		        });
+		    legend.append("rect")
+		        .attr("x", width + 10)
+		        .attr("width", 12)
+		        .attr("height", 12)
+		        .style("fill", color);
+		    legend.on("click", function(type) {
+		        // dim all of the icons in legend
+		        d3.selectAll(".legend")
+		            .style("opacity", 0.1);
+		        // make the one selected be un-dimmed
+		        d3.select(this)
+		            .style("opacity", 1);
+		        // select all dots and apply 0 opacity (hide)
+		        d3.selectAll(".dot")
+		        // .transition()
+		        // .duration(500)
+		        .style("opacity", 0.0)
+		        // filter out the ones we want to show and apply properties
+		        .filter(function(d) {
+		            return d["first_careunit"] == type;
+		        })
+		            .style("opacity", 1) // need this line to unhide dots
+		        .style("stroke", "black")
+		        // apply stroke rule
+		        .style("fill", function(d) {
+		            if (d.hospital_expire_flag == 1) {
+		                return this;
+		            } else {
+		                return "white";
+		            };
+		        });
+		    });
+		    legend.append("text")
+		        .attr("x", width + 26)
+		        .attr("dy", ".65em")
+		        .text(function(d) {
+		            return d;
+		        });
+		    d3.select("button.reset").on("click", change);
+		    d3.select("button.changexlos").on("click", updateX);
+		
+		    function change() {
+		        xMax = d3.max(data, function(d) {
+		            return d[xCat];
+		        });
+		        xMin = d3.min(data, function(d) {
+		            return d[xCat];
+		        });
+		        zoomBeh.x(x.domain([xMin, xMax])).y(y.domain([yMin, yMax]));
+		
+		        var svg = d3.select("#scatter").transition();
+		        svg.select(".x.axis").duration(750).call(xAxis).select(".label").text(labels[xCat]);
+		        objects.selectAll(".dot").transition().duration(1000)
+		            .attr({
+		                r: function(d) {
+		                    return 4 * Math.sqrt(d[rCat] / Math.PI);
+		                },
+		                cx: function(d) {
+		                    return x(d[xCat]);
+		                },
+		                cy: function(d) {
+		                    return y(d[yCat]);
+		                }
+		            });
+		    }
+		
+		    function zoom() {
+		        svg.select(".x.axis").call(xAxis);
+		        svg.select(".y.axis").call(yAxis);
+		        svg.selectAll(".dot")
+		            .attr({
+		                cx: function(d) {
+		                    return x(d[xCat]);
+		                },
+		                cy: function(d) {
+		                    return y(d[yCat]);
+		                }
+		            });
+		            // .attr("transform", transform);
+		    }
+		
+		    function transform(d) {
+		        return "translate(" + x(d[xCat]) + "," + y(d[yCat]) + ")";
+		    }
+		
+		    function updateX() {
+		        xCat = "gowers_x",
+		        yCat = "gowers_y",
+		        rCat = 1.0,
+		        colorCat = "gowers_mean_shift";
+		        xMax = d3.max(data, function(d) {
+		            return d[xCat];
+		        }) * 1.05,
+		        xMin = d3.min(data, function(d) {
+		            return d[xCat];
+		        }),
+		        xMin = xMin > 0 ? 0 : xMin,
+		        yMax = d3.max(data, function(d) {
+		            return d[yCat];
+		        }) * 1.05,
+		        yMin = d3.min(data, function(d) {
+		            return d[yCat];
+		        }),
+		        yMin = yMin > 0 ? 0 : yMin;
+		        x.domain([xMin, xMax]);
+		        y.domain([yMin, yMax]);
+		
+		        var zoomBeh = d3.behavior.zoom()
+		            .x(x)
+		            .y(y)
+		            .scaleExtent([0, 1000])
+		            .on("zoom", zoom);
+		
+		        var svg = d3.select("svg").transition();
+		        svg.select(".y.axis")
+		            .duration(1000)
+		            .call(yAxis);
+		        svg.select('.x.axis')
+		            .duration(1000)
+		            .call(xAxis);
+		        svg.select('.label')
+		            .duration(1000)
+		        .attr("x", width)
+		            .attr("y", margin.bottom - 10)
+		            .style("text-anchor", "end")
+		            .text("Length of Stay");
+		
+		        d3.selectAll("circle.dot")
+		            .transition()
+		            .duration(1000)
+		            .attr({
+		                r: function(d) {
+		                    return 4 * Math.sqrt(d[rCat] / Math.PI);
+		                },
+		                cx: function(d) {
+		                    return x(d[xCat]);
+		                },
+		                cy: function(d) {
+		                    return y(d[yCat]);
+		                }
+		            });
+		    }
+		});
+    	
+    	
+		/*Start date/time hover graph code
 		
 		
 		// Set the dimensions of the canvas / graph
@@ -195,7 +579,7 @@ div.tooltip {
 		    svg.append("g")
 		        .attr("class", "y axis")
 		        .call(yAxis);
-		});
+		});*/
 		//End date/time hover graph
 		
 		
