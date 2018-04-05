@@ -34,7 +34,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about">About This Data Set</a></li>
-	    <li><a href="quality">Data Quality</a></li>
+	    	<li><a href="quality">Data Quality</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -44,8 +44,11 @@
       
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-	<h1>Latent Spatial Positions of Ukrainian Parliamentarians</h1>
-        <p> TBD
+		<h1>Latent Spatial Positions of Ukrainian Parliamentarians</h1>
+        <p> The interactive spatial plot on this page plots the positions of the parliamentarians of the <a href="http://rada.gov.ua/en">Ukrainian Palriament</a> as a funciton of their voting behaviour. 
+        This visualization ws inspired by similar visualizations of the U.S. Congress and <a href="http://www.itsyourparliament.eu/nominate/">European parliament</a>, where spatial positions were determined from roll call votes 
+        by the <a href="https://en.wikipedia.org/wiki/NOMINATE_(scaling_method)">NOMINATE</a> algorithm. This work is part of ongoing research into faciton detection method development, and application
+        of action detection methods to Ukrainian Politics.
         </p>
       </div>
       
@@ -54,6 +57,73 @@
       </div> <!-- /page-header -->
       
       <div id="scatter"></div>
+      <div style="width: 100%; overflow: hidden;">
+	  	  <div style="padding: 10px; float:left">
+	      	 <p><strong>Select Coloring for Points</strong></p>
+	      	 <select id="coloring">
+		    	 <option value="mean_shift">Mean Shift</option>
+		    	 <option value="gmm" selected="selected">Guassian Mixture Model</option>
+		    	 <option value="Party">Formal Party</option>
+		     </select>
+		  </div>
+	
+	      <div style="padding: 10px; float:left">
+	      	<p><strong>Select Spatial Positioning Method for Points</strong></p>
+	      	<select id="positioning">
+		    	<option value="jaccard">Jaccard Index</option>
+		    	<option value="gowers" selected="selected">Specially Weighted Gower's Coefficient</option>
+		    	<option value="hamming">Hamming Distance</option>
+		    </select>
+		  </div>
+		  
+		  <div style="padding: 10px; float:left">
+	      	<p><strong>Select Convocation of the Ukrainian Parliament</strong></p>
+	      	<select id="convocation">
+		    	<option value="convocation_8" selected="selected">2016-current</option>
+		    	<option value="convocation_7" >2014-2016</option>
+		    	<option value="convocation_6">2012-2014</option>
+		    </select>
+		  </div>
+		  
+		  <div style="padding: 10px; float:left">
+		  	<p><strong>Reset Zoom to Original View</strong></p>
+		  	<button class="reset" >Reset Zoom</button>
+		  </div>
+      </div>
+      <div style="width: 100%; overflow: hidden;">
+      	<h4>Instructions</h4>
+      	<ul>
+      		<li><em>Postioning Methods</em>: There are three methods employed to derive the relative similarity of the parliamentarians to each other. Once the pariwise
+      		similarity, or affinity matrix is created by one of the methods, the data is then scaled to two-dimentsions using multi-dimensional scaling. This scaling gives coordinates 
+      		in two (or more) dimensions that preserves the realtive closeness of farness of points to each other. In some cases the recovered dimensions can represent important
+      		aspects in the political spectrum, like liberalness versus conservativeness.
+      			<ul>
+      			<li>Hamming distance: all 'yea' votes become  a 1 and all other types of responses ('nay', 'abstain', etc.) become a zero. 
+      			then the normalized hamming distance of the binary vectors of votes are taken between each set of parliamentarians</li>
+      			<li>Jaccard Index: no assumptions are made about vote responses (they are left raw), and the number of same vote repsonses within each vote 
+      			are divided by the total vote responses, for each parliamentarian.</li>
+      			<li>Specially Weighted Gower's Coefficient: no assumptions are made about vote responses (they are left raw), we incporate subject matter
+      			expertise into the weighting function of the Gower's Coefficient by weighting shared 'nay' votes (i.e. when two parliamentarians vote
+      			'nay' during the same vote) heavier than other shared responses, and weight each vote by the entropy of the votes.</li>
+      			</ul>
+      		</li>
+      		<li><em>Coloring for Points</em>: The coloring for the points derives from the unsupervised clustering technique used 
+      		on the affinity matrices, or collection of pariwise similairties between the parliamentarians. I have also included the ability
+      		to color by their formal party or faction memberships for comparison to the those factions identified by spatial methods.
+      		</li>
+      	</ul>
+      	<h4>General Explantion of the Method</h4>
+      	<p>The fundemental theory behind this analysis that individual's behavior, expecially shared beahviour with other indivdiuals,
+      	leads to the formaiton of social groups. In this case, we are taking voting behaviour as the driving behaviour for the formaiton
+      	of political groups within a political body. This approach is not a new one. There have been methods employed to find facitons trhough voitng behaviour
+      	since the 1920's. Most of the work on faction detection through roll call votes has focused on American institutions liek the
+      	U.S. Congress or the U.S. Supreme Court. Also, most of the methods employed today rely on either estimating votes 'ideal points' in a latent space
+      	using probabilistic utility functions fit on their voting behavior or Guttman-style scaling emthods. All of these methods require a binary outcome for a vote (
+      	i.e. you can only vote 'for' or 'against' something). The methods on this page, while less popular, allow a research to vercome the binary votes and independent voting
+      	assumptions. Moreover, the Gower's Method also allows for a researcher to inject subject matter expertise or test theories about the voting
+      	behaviour.
+      	</p>
+      </div>
 	
 	</div> <!-- /container -->
 
@@ -128,30 +198,17 @@ rect {
     <script src="js/bootstrap.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.js"></script>
-    
-    <select id="coloring">
-    	<option value="mean_shift">Mean Shift</option>
-    	<option value="gmm" selected="selected">Guassian Mixture Model</option>
-    	<option value="Party">Formal Party</option>
-    </select>
-     <select id="positioning">
-    	<option value="jaccard">Jaccard Index</option>
-    	<option value="gowers" selected="selected">Specially Weighted Gower's Coefficient</option>
-    	<option value="hamming">Hamming Distance</option>
-    </select>
-    <button class="reset" >Reset Zoom</button>
-    
-    <script>
+	<script>
     $( document ).ready(function(){
     	
     	/*Start interactive scatter plot*/
     	var margin = {
 		        top: 20,
-		        right: 70,
+		        right: 350,
 		        bottom: 50,
-		        left: 70
+		        left: 10
 		    },
-		    outerWidth = 1100,
+		    outerWidth = 1300,
 		    outerHeight = 600,
 		    width = outerWidth - margin.left - margin.right,
 		    height = outerHeight - margin.top - margin.bottom;
@@ -191,6 +248,7 @@ rect {
 		    "Facebook": "Facebook",
 		    "Twitter": "Twitter"
 		};
+			
 		
 		d3.csv("css/convocation_8.csv", function(data) {
 		    data.forEach(function(d) {
@@ -241,7 +299,7 @@ rect {
 		        .attr("class", "d3-tip")
 		        .offset([-10, 0])
 		        .html(function(d) {
-		            return labels["Name"] + ": " + d["Parliamentarian"] + "<br>" + labels["Election"] + ": " + d["Election"] + "<br>" + 
+		            return labels["Name"] + ": " + d["Parliamentarian"] + "<br>" + labels["Election"] + ": " + d["Election"] + "<br>" + labels["Party"] + ": " + d["Party"]  + "<br>" +
 		            labels["Committee"] + ": " + d["Committee"]  + "<br>" + labels["Profession"] + ": " + d["Profession"]
 		             + "<br>" + labels["Age"] + ": " + d["Age"]  + "<br>" + labels["Gender"] + ": " + d["Gender"]  + "<br>" + labels["Education"] + ": " + d["Education"]
 		              + "<br>" + labels["Facebook"] + ": " + d["Facebook"]  + "<br>" + labels["Twitter"] + ": " + d["Twitter"];
@@ -354,6 +412,65 @@ rect {
 			  	metric = d3.select(this).property('value');
 			    update(metric, colorSource);
 			});
+			d3.select('#convocation')
+			  .on('change', function() {
+			  	var convocation = d3.select(this).property('value');
+			    updateData(convocation);
+			});
+			
+			function updateData(convocation) {
+				d3.csv("css/"+convocation+".csv", function(data) {
+				    data.forEach(function(d) {
+				        d.Parliamentarian = d.Parliamentarian;
+				        d.gowers_mean_shift = d.gowers_mean_shift;
+				        d.gowers_gmm = d.gowers_gmm;
+				        d.gowers_x = Number(d.gowers_x);
+				        d.gowers_y = Number(d.gowers_y);
+				        d.jaccard_mean_shift = d.jaccard_mean_shift;
+				        d.jaccard_gmm = d.jaccard_gmm;
+				        d.jaccard_x = Number(d.jaccard_x);
+				        d.jaccard_y = Number(d.jaccard_y);
+				        d.hamming_mean_shift = d.hamming_mean_shift;
+				        d.hamming_gmm = d.hamming_gmm;
+				        d.hamming_x = Number(d.hamming_x);
+				        d.hamming_y = Number(d.hamming_y);
+				        d.Age = Number(d.Age);
+				        d.Party = d.Party;
+				        d.Committee = d.Committee;
+				        d.Education = d.Education;
+				        d.Election = d.Election;
+				        d.Profession = d.Profession;
+				        d.Gender = d.Gender;
+				        d.Facebook = d.Facebook;
+				        d.Twitter = d.Twitter;
+				    });
+				    xMax = d3.max(data, function(d) {
+			            return d[xCat];
+			        });
+			        xMin = d3.min(data, function(d) {
+			            return d[xCat];
+			        });
+			        zoomBeh.x(x.domain([xMin, xMax])).y(y.domain([yMin, yMax]));
+			
+			        var svg = d3.select("#scatter").transition();
+			        svg.select(".x.axis").duration(750).call(xAxis).select(".label").text(labels[xCat]);
+			        objects.selectAll(".dot").transition().duration(1000)
+			            .attr({
+			                r: function() {
+			                    return 4 * Math.sqrt(4.0 / Math.PI);
+			                },
+			                cx: function(d) {
+			                    return x(d[xCat]);
+			                },
+			                cy: function(d) {
+			                    return y(d[yCat]);
+			                }
+			            });
+			    	
+		    	});
+
+				
+			}
 
 		
 		    function change() {
