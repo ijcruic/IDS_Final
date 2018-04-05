@@ -79,9 +79,12 @@
 		  <div style="padding: 10px; float:left">
 	      	<p><strong>Select Convocation of the Ukrainian Parliament</strong></p>
 	      	<select id="convocation">
-		    	<option value="convocation_8" selected="selected">2016-current</option>
-		    	<option value="convocation_7" >2014-2016</option>
-		    	<option value="convocation_6">2012-2014</option>
+		    	<option value="convocation_8" selected="selected">8th convocation (2014-present)</option>
+		    	<option value="convocation_7" >7th convocation (2012-2014)</option>
+		    	<option value="convocation_6">6th convocation (2007-2012)</option>
+		    	<option value="convocation_5">5th convocation (2006-2007)</option>
+		    	<option value="convocation_4">4th convocation (2002-2006)</option>
+		    	<option value="convocation_3">3rd convocation (1998-2002)</option>
 		    </select>
 		  </div>
 		  
@@ -419,6 +422,7 @@ rect {
 			});
 			
 			function updateData(convocation) {
+				
 				d3.csv("css/"+convocation+".csv", function(data) {
 				    data.forEach(function(d) {
 				        d.Parliamentarian = d.Parliamentarian;
@@ -450,22 +454,39 @@ rect {
 			        xMin = d3.min(data, function(d) {
 			            return d[xCat];
 			        });
-			        zoomBeh.x(x.domain([xMin, xMax])).y(y.domain([yMin, yMax]));
+			        yMax = d3.max(data, function(d) {
+			            return d[yCat];
+			        });
+			        yMin = d3.min(data, function(d) {
+			            return d[yCat];
+			        });
+			        x.domain([xMin, xMax]);
+				    y.domain([yMin, yMax]);
+				
+				    color = d3.scale.category10();
+				
+				    zoomBeh.x(x.domain([xMin, xMax])).y(y.domain([yMin, yMax]));
 			
 			        var svg = d3.select("#scatter").transition();
-			        svg.select(".x.axis").duration(750).call(xAxis).select(".label").text(labels[xCat]);
-			        objects.selectAll(".dot").transition().duration(1000)
-			            .attr({
-			                r: function() {
-			                    return 4 * Math.sqrt(4.0 / Math.PI);
-			                },
-			                cx: function(d) {
-			                    return x(d[xCat]);
-			                },
-			                cy: function(d) {
-			                    return y(d[yCat]);
-			                }
-			            });
+			        svg.select(".x.axis").duration(750).call(xAxis);
+			        svg.select(".y.axis").duration(750).call(yAxis);
+			        
+					objects.selectAll(".dot").data(data).enter();
+				    objects.selectAll(".dot").transition().duration(1000)
+				        .attr({
+				            r: function() {
+				                return 4 * Math.sqrt(4.0 / Math.PI);
+				            },
+				            cx: function(d) {
+				                return x(d[xCat]);
+				            },
+				            cy: function(d) {
+				                return y(d[yCat]);
+				            }
+				        })
+					    .style("fill", function(d) {
+					        return color(d[colorCat]);
+					    });
 			    	
 		    	});
 
