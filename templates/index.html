@@ -132,6 +132,12 @@ rect {
     <select id="coloring">
     	<option value="mean_shift">Mean Shift</option>
     	<option value="gmm" selected="selected">Guassian Mixture Model</option>
+    	<option value="Party">Formal Party</option>
+    </select>
+     <select id="positioning">
+    	<option value="jaccard">Jaccard Index</option>
+    	<option value="gowers" selected="selected">Specially Weighted Gower's Coefficient</option>
+    	<option value="hamming">Hamming Distance</option>
     </select>
     <button class="reset" >Reset Zoom</button>
     
@@ -165,14 +171,18 @@ rect {
 		    .scale(y)
 		    .orient("left")
 		    .tickSize(-width);
+		    
+		var metric = "gowers";
+		var colorSource = "gmm";
 		
-		var xCat = "gowers_x",
-		    yCat = "gowers_y",
-		    colorCat = "gowers_gmm";
+		var xCat = metric+"_x",
+		    yCat = metric+"_y",
+		    colorCat = metric+"_"+colorSource;
 		
 		var labels = {
 			"Name": "Name",
 		    "Age": "Age",
+		    "Party":"Party",
 		    "Committee": "Committee",
 		    "Education": "Education",
 		    "Election": "Election",
@@ -198,6 +208,7 @@ rect {
 		        d.hamming_x = Number(d.hamming_x);
 		        d.hamming_y = Number(d.hamming_y);
 		        d.Age = Number(d.Age);
+		        d.Party = d.Party;
 		        d.Committee = d.Committee;
 		        d.Education = d.Education;
 		        d.Election = d.Election;
@@ -334,9 +345,14 @@ rect {
 		    d3.select("button.reset").on("click", change);
 		    d3.select('#coloring')
 			  .on('change', function() {
-			    var newData = "gowers_" + d3.select(this).property('value');
-			    
-			    updateColors(newData);
+			    colorSource = d3.select(this).property('value');
+
+			    update(metric, colorSource);
+			});
+			d3.select('#positioning')
+			  .on('change', function() {
+			  	metric = d3.select(this).property('value');
+			    update(metric, colorSource);
 			});
 
 		
@@ -384,8 +400,34 @@ rect {
 		        return "translate(" + x(d[xCat]) + "," + y(d[yCat]) + ")";
 		    }
 		
-		    function updateColors(newColor) {
-		        colorCat = newColor;
+		    function update(metric, colorSource) {
+		    	if (colorSource === "Party"){
+		    		colorCat = colorSource;
+		    	} else {
+		        	colorCat = metric + "_" + colorSource;
+	        	}
+
+		        xCat = metric+"_x",
+		    	yCat = metric+"_y";
+		    		
+		        color = d3.scale.category10();
+		        
+		        xMax = d3.max(data, function(d) {
+		            return d[xCat];
+		        }) * 1.05,
+		        xMin = d3.min(data, function(d) {
+		            return d[xCat];
+		        }),
+		        xMin = xMin > 0 ? 0 : xMin,
+		        yMax = d3.max(data, function(d) {
+		            return d[yCat];
+		        }) * 1.05,
+		        yMin = d3.min(data, function(d) {
+		            return d[yCat];
+		        }),
+		        yMin = yMin > 0 ? 0 : yMin;
+		        x.domain([xMin, xMax]);
+		        y.domain([yMin, yMax]);
 
 		        d3.selectAll("circle.dot")
 		            .transition()
