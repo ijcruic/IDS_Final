@@ -405,32 +405,27 @@ rect {
 			        	return color(d[colorCat]);
 			    });
 			    
-			    updateLegend(color);
-		    }
-		    
-		    function updateLegend(color){
 			    svg.selectAll(".legend").remove();
 		        
-		        var legend = svg.selectAll(".legend")
-		        .data(color.domain())
-		        .enter().append("g")
-		        .classed("legend", true)
-		        .attr("transform", function(d, i) {
-		            return "translate(0," + i * 20 + ")";
-		        });
-		        legend.append("rect")
-			        .attr("x", width + 10)
-			        .attr("width", 12)
-			        .attr("height", 12)
-			        .style("fill", color);
-			    legend.append("text")
-			        .attr("x", width + 26)
-			        .attr("dy", ".65em")
-			        .text(function(d) {
-			            return d;
-			     });
-			     
-		     }
+				var legend = svg.selectAll(".legend")
+				.data(color.domain())
+				.enter().append("g")
+				.classed("legend", true)
+				.attr("transform", function(d, i) {
+				    return "translate(0," + i * 20 + ")";
+				});
+				legend.append("rect")
+					.attr("x", width + 10)
+					.attr("width", 12)
+					.attr("height", 12)
+					.style("fill", color);
+				    legend.append("text")
+					.attr("x", width + 26)
+					.attr("dy", ".65em")
+					.text(function(d) {
+					    return d;
+				     });
+		    }
 
 		});
     	
