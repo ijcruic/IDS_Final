@@ -128,8 +128,13 @@ rect {
     <script src="js/bootstrap.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.js"></script>
-    <button class="changeColor">Change Coloring to Mean Shift</button>
+    
+    <select id="coloring">
+    	<option value="mean_shift">Mean Shift</option>
+    	<option value="gmm" selected="selected">Guassian Mixture Model</option>
+    </select>
     <button class="reset" >Reset Zoom</button>
+    
     <script>
     $( document ).ready(function(){
     	
@@ -225,8 +230,10 @@ rect {
 		        .attr("class", "d3-tip")
 		        .offset([-10, 0])
 		        .html(function(d) {
-		            return labels["Name"] + ": " + d["Parliamentarian"] + "<br>" + labels["Age"] + ": " + d["Age"] + "<br>" + 
-		            labels["Committee"] + ": " + d["Committee"];
+		            return labels["Name"] + ": " + d["Parliamentarian"] + "<br>" + labels["Election"] + ": " + d["Election"] + "<br>" + 
+		            labels["Committee"] + ": " + d["Committee"]  + "<br>" + labels["Profession"] + ": " + d["Profession"]
+		             + "<br>" + labels["Age"] + ": " + d["Age"]  + "<br>" + labels["Gender"] + ": " + d["Gender"]  + "<br>" + labels["Education"] + ": " + d["Education"]
+		              + "<br>" + labels["Facebook"] + ": " + d["Facebook"]  + "<br>" + labels["Twitter"] + ": " + d["Twitter"];
 		        });
 		
 		    var zoomBeh = d3.behavior.zoom()
@@ -254,8 +261,7 @@ rect {
 		        .classed("label", true)
 		        .attr("x", width)
 		        .attr("y", margin.bottom - 10)
-		        .style("text-anchor", "end")
-		        .text("Latent Dimension 1");
+		        .style("text-anchor", "end");
 		    svg.append("g")
 		        .classed("y axis", true)
 		        .call(yAxis)
@@ -264,8 +270,7 @@ rect {
 		        .attr("transform", "rotate(-90)")
 		        .attr("y", -margin.left)
 		        .attr("dy", "1.5em")
-		        .style("text-anchor", "end")
-		        .text("Latent Dimension 2");
+		        .style("text-anchor", "end");
 		
 		    var objects = svg.append("svg")
 		        .classed("objects", true)
@@ -317,37 +322,23 @@ rect {
 		        .attr("width", 12)
 		        .attr("height", 12)
 		        .style("fill", color);
-		    legend.on("click", function(type) {
-		        // dim all of the icons in legend
-		        d3.selectAll(".legend")
-		            .style("opacity", 0.1);
-		        // make the one selected be un-dimmed
-		        d3.select(this)
-		            .style("opacity", 1);
-		        // select all dots and apply 0 opacity (hide)
-		        d3.selectAll(".dot")
-		        // .transition()
-		        // .duration(500)
-		        .style("opacity", 0.0)
-		        // filter out the ones we want to show and apply properties
-		        .filter(function(d) {
-		            return d["gowers_gmm"] == type;
-		        })
-		            .style("opacity", 1) // need this line to unhide dots
-		        .style("stroke", "black")
-		        // apply stroke rule
-		        .style("fill", function(d) {
-		               return this;
-		        });
-		    });
+		    
 		    legend.append("text")
 		        .attr("x", width + 26)
 		        .attr("dy", ".65em")
 		        .text(function(d) {
 		            return d;
 		        });
+		        
+		        
 		    d3.select("button.reset").on("click", change);
-		    d3.select("button.changeColor").on("click", updateX);
+		    d3.select('#coloring')
+			  .on('change', function() {
+			    var newData = "gowers_" + d3.select(this).property('value');
+			    
+			    updateColors(newData);
+			});
+
 		
 		    function change() {
 		        xMax = d3.max(data, function(d) {
@@ -393,47 +384,9 @@ rect {
 		        return "translate(" + x(d[xCat]) + "," + y(d[yCat]) + ")";
 		    }
 		
-		    function updateX() {
-		        xCat = "gowers_x",
-		        yCat = "gowers_y",
-		        colorCat = "gowers_mean_shift";
-		        xMax = d3.max(data, function(d) {
-		            return d[xCat];
-		        }) * 1.05,
-		        xMin = d3.min(data, function(d) {
-		            return d[xCat];
-		        }),
-		        xMin = xMin > 0 ? 0 : xMin,
-		        yMax = d3.max(data, function(d) {
-		            return d[yCat];
-		        }) * 1.05,
-		        yMin = d3.min(data, function(d) {
-		            return d[yCat];
-		        }),
-		        yMin = yMin > 0 ? 0 : yMin;
-		        x.domain([xMin, xMax]);
-		        y.domain([yMin, yMax]);
-		
-		        var zoomBeh = d3.behavior.zoom()
-		            .x(x)
-		            .y(y)
-		            .scaleExtent([0, 1000])
-		            .on("zoom", zoom);
-		
-		        var svg = d3.select("svg").transition();
-		        svg.select(".y.axis")
-		            .duration(1000)
-		            .call(yAxis);
-		        svg.select('.x.axis')
-		            .duration(1000)
-		            .call(xAxis);
-		        svg.select('.label')
-		            .duration(1000)
-		        .attr("x", width)
-		            .attr("y", margin.bottom - 10)
-		            .style("text-anchor", "end")
-		            .text("Latent Dimension 1");
-		
+		    function updateColors(newColor) {
+		        colorCat = newColor;
+
 		        d3.selectAll("circle.dot")
 		            .transition()
 		            .duration(1000)
@@ -449,9 +402,36 @@ rect {
 		                }
 		            })
 		            .style("fill", function(d) {
-			        return color(d[colorCat]);
+			        	return color(d[colorCat]);
 			    });
+			    
+			    updateLegend(color);
 		    }
+		    
+		    function updateLegend(color){
+			    svg.selectAll(".legend").remove();
+		        
+		        var legend = svg.selectAll(".legend")
+		        .data(color.domain())
+		        .enter().append("g")
+		        .classed("legend", true)
+		        .attr("transform", function(d, i) {
+		            return "translate(0," + i * 20 + ")";
+		        });
+		        legend.append("rect")
+			        .attr("x", width + 10)
+			        .attr("width", 12)
+			        .attr("height", 12)
+			        .style("fill", color);
+			    legend.append("text")
+			        .attr("x", width + 26)
+			        .attr("dy", ".65em")
+			        .text(function(d) {
+			            return d;
+			     });
+			     
+		     }
+
 		});
     	
 	}); //End document ready   
