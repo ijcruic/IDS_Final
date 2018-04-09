@@ -102,11 +102,11 @@
       		aspects in the political spectrum, like liberalness versus conservativeness. A great example of this in this set is the 5th convocation, which seems to 
       		have a pretty pronounced split between pro-Russian parties and anti-Russian parties along the first dimnesion. 
       			<ul>
-      			<li>Hamming distance: all 'yea' votes become  a 1 and all other types of responses ('nay', 'abstain', etc.) become a zero. 
+      			<li><a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming Distance</a>: all 'yea' votes become  a 1 and all other types of responses ('nay', 'abstain', etc.) become a zero. 
       			then the normalized hamming distance of the binary vectors of votes are taken between each set of parliamentarians</li>
-      			<li>Jaccard Index: no assumptions are made about vote responses (they are left raw), and the number of same vote repsonses within each vote 
+      			<li><a href="https://en.wikipedia.org/wiki/Jaccard_index">Jaccard Index</a>: no assumptions are made about vote responses (they are left raw), and the number of same vote repsonses within each vote 
       			are divided by the total vote responses, for each parliamentarian.</li>
-      			<li>Specially Weighted Gower's Coefficient: no assumptions are made about vote responses (they are left raw), we incporate subject matter
+      			<li>Specially Weighted <a href="https://cran.r-project.org/web/packages/gower/vignettes/intro.html">Gower's Coefficient</a>: no assumptions are made about vote responses (they are left raw), we incporate subject matter
       			expertise into the weighting function of the Gower's Coefficient by weighting shared 'nay' votes (i.e. when two parliamentarians vote
       			'nay' during the same vote) heavier than other shared responses, and weight each vote by the entropy of the votes.</li>
       			</ul>
@@ -382,6 +382,8 @@ rect {
 			    }) 
 		        .on("mouseover", tip.show)
 		        .on("mouseout", tip.hide);
+		        
+		    var allShowing =true;
 		
 		    var legend = svg.selectAll(".legend")
 		        .data(color.domain())
@@ -396,21 +398,31 @@ rect {
 		        .attr("height", 12)
 		        .style("fill", color);
 		    legend.on("click", function(type) {
-		        // dim all of the icons in legend
-		        d3.selectAll(".legend")
-		            .style("opacity", 0.1);
-		        // make the one selected be un-dimmed
-		        d3.select(this)
-		            .style("opacity", 1);
-		        // select all dots
-		        d3.selectAll(".dot")
-		        .style("stroke", "black")
-		        .style("opacity", 0.2)
-		        // filter out the ones we want to show and apply properties
-		        .filter(function(d) {
-		            return d[colorCat] === type;
-		        })
-		        .style("opacity", 1); // need this line to unhide dots
+		    	if (allShowing){
+			        // dim all of the icons in legend
+			        d3.selectAll(".legend")
+			            .style("opacity", 0.1);
+			        // make the one selected be un-dimmed
+			        d3.select(this)
+			            .style("opacity", 1);
+			        // select all dots
+			        d3.selectAll(".dot")
+			        .style("stroke", "black")
+			        .style("opacity", 0.2)
+			        // filter out the ones we want to show and apply properties
+			        .filter(function(d) {
+			            return d[colorCat] === type;
+			        })
+			        .style("opacity", 1); // need
+			        allShowing =false;
+				} else {
+					d3.selectAll(".legend")
+			            .style("opacity", 1.0);
+			        d3.selectAll(".dot")
+			        	.style("stroke", "none")
+			        	.style("opacity", 1);
+			    	allShowing=true;
+				}
 		    });
 		    legend.append("text")
 		        .attr("x", width + 26)
@@ -635,21 +647,31 @@ rect {
 					    return d;
 				     });
 				legend.on("click", function(type) {
-			        // dim all of the icons in legend
-			        d3.selectAll(".legend")
-			            .style("opacity", 0.1);
-			        // make the one selected be un-dimmed
-			        d3.select(this)
-			            .style("opacity", 1);
-			        // select all dots
-			        d3.selectAll(".dot")
-			        .style("stroke", "black")
-			        .style("opacity", 0.2)
-			        // filter out the ones we want to show and apply properties
-			        .filter(function(d) {
-			            return d[colorCat] === type;
-			        })
-			        .style("opacity", 1); // need this line to unhide dots
+			    	if (allShowing){
+				        // dim all of the icons in legend
+				        d3.selectAll(".legend")
+				            .style("opacity", 0.1);
+				        // make the one selected be un-dimmed
+				        d3.select(this)
+				            .style("opacity", 1);
+				        // select all dots
+				        d3.selectAll(".dot")
+				        .style("stroke", "black")
+				        .style("opacity", 0.2)
+				        // filter out the ones we want to show and apply properties
+				        .filter(function(d) {
+				            return d[colorCat] === type;
+				        })
+				        .style("opacity", 1); // need
+				        allShowing =false;
+					} else {
+						d3.selectAll(".legend")
+				            .style("opacity", 1.0);
+				        d3.selectAll(".dot")
+				        	.style("stroke", "none")
+				        	.style("opacity", 1);
+				    	allShowing=true;
+					}
 			    });
 		    }
 
