@@ -395,7 +395,23 @@ rect {
 		        .attr("width", 12)
 		        .attr("height", 12)
 		        .style("fill", color);
-		    
+		    legend.on("click", function(type) {
+		        // dim all of the icons in legend
+		        d3.selectAll(".legend")
+		            .style("opacity", 0.1);
+		        // make the one selected be un-dimmed
+		        d3.select(this)
+		            .style("opacity", 1);
+		        // select all dots
+		        d3.selectAll(".dot")
+		        .style("stroke", "black")
+		        .style("opacity", 0.2)
+		        // filter out the ones we want to show and apply properties
+		        .filter(function(d) {
+		            return d[colorCat] === type;
+		        })
+		        .style("opacity", 1); // need this line to unhide dots
+		    });
 		    legend.append("text")
 		        .attr("x", width + 26)
 		        .attr("dy", ".65em")
@@ -497,29 +513,10 @@ rect {
 					    }) 
 				        .on("mouseover", tip.show)
 				        .on("mouseout", tip.hide);
-			       
-			        //objects.selectAll(".dot").exit().remove();
-					//objects.selectAll(".dot").data(data).enter();
 					
-				    //objects.selectAll(".dot").transition().duration(1000)
-				    //    .attr({
-				    //        r: function() {
-				    //            return 4 * Math.sqrt(4.0 / Math.PI);
-				    //        },
-				    //        cx: function(d) {
-				    //            return x(d[xCat]);
-				    //        },
-				    //        cy: function(d) {
-				    //            return y(d[yCat]);
-				    //        }
-				    //    })
-					//    .style("fill", function(d) {
-					//        return color(d[colorCat]);
-					//    });
-
-			    	
+			    	update(metric, colorSource);
 		    	});
-
+				
 				
 			}
 
@@ -611,6 +608,8 @@ rect {
 		                    return y(d[yCat]);
 		                }
 		            })
+		            .style("stroke", "none")
+		        	.style("opacity", 1.0)
 		            .style("fill", function(d) {
 			        	return color(d[colorCat]);
 			    });
@@ -635,6 +634,23 @@ rect {
 					.text(function(d) {
 					    return d;
 				     });
+				legend.on("click", function(type) {
+			        // dim all of the icons in legend
+			        d3.selectAll(".legend")
+			            .style("opacity", 0.1);
+			        // make the one selected be un-dimmed
+			        d3.select(this)
+			            .style("opacity", 1);
+			        // select all dots
+			        d3.selectAll(".dot")
+			        .style("stroke", "black")
+			        .style("opacity", 0.2)
+			        // filter out the ones we want to show and apply properties
+			        .filter(function(d) {
+			            return d[colorCat] === type;
+			        })
+			        .style("opacity", 1); // need this line to unhide dots
+			    });
 		    }
 
 		});
