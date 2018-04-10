@@ -48,7 +48,7 @@
         <p> In order to better understand possible factions in political bodies, I have created an interactive visualization of parliamentarians' voting behaviour. 
         The interactive spatial plot on this page plots the positions of the parliamentarians of the <a href="http://rada.gov.ua/en">Ukrainian Palriament</a> as a funciton of their voting behaviour. 
         This visualization was inspired by similar visualizations of the U.S. Congress and <a href="http://www.itsyourparliament.eu/nominate/">European parliament</a>, where spatial positions were determined from roll call votes 
-        by the <a href="https://en.wikipedia.org/wiki/NOMINATE_(scaling_method)">NOMINATE</a> algorithm. This work is part of ongoing research into faciton detection method development, and the application
+        by the <a href="https://en.wikipedia.org/wiki/NOMINATE_(scaling_method)">NOMINATE</a> algorithm. This work is part of ongoing research into faction detection method development, and the application
         of faction detection methods to Ukrainian Politics. This page is a visualization designed to help in evaluating different faciton detection methods and visually investigate the data for general patterns and anomolies.
         </p>
       </div>
@@ -65,6 +65,7 @@
 		    	 <option value="mean_shift">Mean Shift</option>
 		    	 <option value="gmm" selected="selected">Guassian Mixture Model</option>
 		    	 <option value="Party">Formal Party</option>
+		    	 <option value="Election">Election Method</option>
 		     </select>
 		  </div>
 	
@@ -114,7 +115,8 @@
       		</li>
       		<li><em>Coloring for Points</em>: The coloring for the points derives from the unsupervised clustering technique used 
       		on the affinity matrices, or collection of pariwise similairties between the parliamentarians. I have also included the ability
-      		to color by their formal party or faction memberships for comparison to the those factions identified by spatial methods.
+      		to color by their formal party or faction memberships, and by whether they were elected to a local constituency seat or a national party seat in the parliament
+      		for comparison to the those factions identified by spatial methods.
       		</li>
       	</ul>
       	<h4>Some inital, interesting findings..</h4>
@@ -128,7 +130,7 @@
       		would seem that the Specially Weighted Gower's Coefficient is the only method that picks this up.
       		</li>
       		<li> In convocation 5, there is a distinct split between parties, as seen by both Jaccard and Gower's along supporitng 
-      		<a href="https://en.wikipedia.org/wiki/2006_Ukrainian_political_crisis">Yulia Tymoshenko</a>. This was a well dcoumented period
+      		<a href="https://en.wikipedia.org/wiki/2006_Ukrainian_political_crisis">Yulia Tymoshenko</a>. This was a well documented period
       		of crisis for the palriament as well
       		</li>
       		<li> It appears that differences in the weightings in the Gower's coefficient, versus just using a raw Jaccard index 
@@ -595,7 +597,7 @@ rect {
 		    }
 		
 		    function update(metric, colorSource) {
-		    	if (colorSource === "Party"){
+		    	if ((colorSource === "Party") || (colorSource === "Election")){
 		    		colorCat = colorSource;
 		    	} else {
 		        	colorCat = metric + "_" + colorSource;
