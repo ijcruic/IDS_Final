@@ -46,11 +46,11 @@
       <div class="jumbotron" >
 		<h1>Latent Spatial Positions of Ukrainian Parliamentarians</h1>
         <h3><strong>Can we find factions of parliamentarians in the Ukrainian Parliament by their voting behavior? </strong></h3>
-        <p> In order to better understand possible factions in political bodies, I have created an interactive visualization of different methods of comparing parliamentarians by their voting behaviour. 
-        The interactive spatial plot on this page plots the positions of the parliamentarians of the <a href="http://rada.gov.ua/en">Ukrainian Palriament</a> as a funciton of their voting behaviour. 
+        <p> In order to better understand possible factions in political bodies, I have created an interactive visualization of different methods of comparing parliamentarians by their voting behavior. 
+        The interactive spatial plot on this page plots the positions of the parliamentarians of the <a href="http://rada.gov.ua/en">Ukrainian Palriament</a> as a function of their voting behavior. 
         This visualization was inspired by similar visualizations of the U.S. Congress and <a href="http://www.itsyourparliament.eu/nominate/">European parliament</a>, where spatial positions were determined from roll call votes 
         by the <a href="https://en.wikipedia.org/wiki/NOMINATE_(scaling_method)">NOMINATE</a> algorithm. This work is part of ongoing research into faction detection method development, and the application
-        of faction detection methods to Ukrainian Politics. This page is a visualization designed to help in evaluating different faction detection methods, and to visually investigate the data for general patterns and anomolies.
+        of faction detection methods to Ukrainian Politics. This page is a visualization designed to help in evaluating different faction detection methods, and to visually investigate the data for general patterns and anomalies.
         </p>
       </div>
       
@@ -99,23 +99,23 @@
       <div style="width: 100%; overflow: hidden;">
       	<h4>Instructions</h4>
       	<ul>
-      		<li><em>Postioning Methods</em>: There are three methods employed to derive the relative similarity of the parliamentarians to each other. Once the pariwise
-      		similarity, or affinity matrix is created by one of the methods, the data is then scaled to two-dimentsions using multi-dimensional scaling. This scaling gives coordinates 
+      		<li><em>Positioning Methods</em>: There are three methods employed to derive the relative similarity of the parliamentarians to each other. Once the pairwise
+      		similarity, or affinity matrix is created by one of the methods, the data is then scaled to two dimensions using multi-dimensional scaling. This scaling gives coordinates 
       		in two (or more) dimensions that preserves the realtive 'closeness' or 'farness' of points to each other. In some cases the recovered dimensions can represent important
       		aspects in the political spectrum, like liberalness versus conservativeness. A great example of this in this set is the 5th convocation, which seems to 
-      		have a pretty pronounced split between pro-Russian parties and anti-Russian parties along the first dimnesion. 
+      		have a pretty pronounced split between pro-Russian parties and anti-Russian parties along the first dimension. 
       			<ul>
       			<li><a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming Distance</a>: all 'yea' votes become  a 1 and all other types of responses ('nay', 'abstain', etc.) become a zero. 
       			then the normalized hamming distance of the binary vectors of votes are taken between each set of parliamentarians</li>
       			<li><a href="https://en.wikipedia.org/wiki/Jaccard_index">Jaccard Index</a>: no assumptions are made about vote responses (they are left raw), and the number of same vote repsonses within each vote 
       			are divided by the total vote responses, for each parliamentarian.</li>
-      			<li>Specially Weighted <a href="https://cran.r-project.org/web/packages/gower/vignettes/intro.html">Gower's Coefficient</a>: no assumptions are made about vote responses (they are left raw), we incporate subject matter
+      			<li>Specially Weighted <a href="https://cran.r-project.org/web/packages/gower/vignettes/intro.html">Gower's Coefficient</a>: no assumptions are made about vote responses (they are left raw), we incorporate subject matter
       			expertise into the weighting function of the Gower's Coefficient by weighting shared 'nay' votes (i.e. when two parliamentarians vote
       			'nay' during the same vote) heavier than other shared responses, and weight each vote by the entropy of the votes.</li>
       			</ul>
       		</li>
       		<li><em>Coloring for Points</em>: The coloring for the points derives from the unsupervised clustering technique used 
-      		on the affinity matrices, or collection of pariwise similairties between the parliamentarians. I have also included the ability
+      		on the affinity matrices, or collection of pairwise similarities between the parliamentarians. I have also included the ability
       		to color by their formal party or faction memberships, and by whether they were elected to a local constituency seat or a national party seat in the parliament
       		for comparison to the those factions identified by spatial methods.
       		</li>
@@ -130,13 +130,13 @@
       		it appears he is something of a wildcard is voting patterns and from his connections on his public Facebook page. It
       		would seem that the Specially Weighted Gower's Coefficient is the only method that picks this up.
       		</li>
-      		<li> In convocation 5, there is a distinct split between parties, as seen by both Jaccard and Gower's along supporitng 
+      		<li> In convocation 5, there is a distinct split between parties, as seen by both Jaccard and Gower's along supporting 
       		<a href="https://en.wikipedia.org/wiki/2006_Ukrainian_political_crisis">Yulia Tymoshenko</a>. This was a well documented period
-      		of crisis for the palriament as well
+      		of crisis for the parliament as well.
       		</li>
       		<li> It appears that differences in the weightings in the Gower's coefficient, versus just using a raw Jaccard index 
-      		displays some addiitonal dynamics of coming together or disintegrating in factions of parliamentarians. For example, in the 
-      		5th conovcation the Party of Regions and Yulia Tymoshenko Bloc both appear more spatially spread under Gower's than Jaccard. The lack of cohesiveness
+      		displays some additional dynamics of coming together or disintegrating in factions of parliamentarians. For example, in the 
+      		5th convocation the Party of Regions and Yulia Tymoshenko Bloc both appear more spatially spread under Gower's than Jaccard. The lack of cohesiveness
       		in these groups may have been salient in causing the emergency election in 2007.
       		</li>
       		<li> In pretty much all circumstances, assuming a binary vote response and using a more traditional distance measure like Hamming Distance,
