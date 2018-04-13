@@ -37,11 +37,6 @@ def about():
     template = JINJA_ENVIRONMENT.get_template('templates/about.html')
     return template.render()
 
-@app.route('/quality')
-def quality():
-    template = JINJA_ENVIRONMENT.get_template('templates/quality.html')
-    return template.render()
-
 @app.errorhandler(404)
 def page_not_found(e):
     """Return a custom 404 error."""

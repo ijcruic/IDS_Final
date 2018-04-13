@@ -71,11 +71,21 @@
 				<li> <strong>Access to this data</strong>: The data is currently proprietary, since it is still being completed and is part of a major research project.
 				So, the data is only available for access and use from the <a href="http://www.casos.cs.cmu.edu/">CASOS</a> research group.
 				</li>
+				<li> <strong>Accountability of this data</strong>: Since the actualy roll call voting results come directly from the official, digital records of
+				the Ukrainian  palriament, the data can be traced to the source and has regulations guiding its correct reporting. As for the attributes, since these have been colelcted from various
+				sources, some official like the Ukrainian Parliament's website and some unofficial like public facing blogs or facebook pages, the data is not neecesarily
+				strongly ties to the underlying phenomenon and could be subject to change at different measurement intervals. 
+				</li>
 				<li> <strong>Coherence of data</strong>: There have been no identified coherence issues with the roll call data. The distributions of vote repsonses matches what our
 				subject matter experts have told us to expect (i.e. mostly 'yay' votes, with a good number of 'abstain' votes and very few
 				'nay' votes). The data is repesented as a collection of parliamentarian by votes matrices for each convocation. As an example, see below:
 				
 				<p> <img src="templates/data_example.png" alt="Mountain View", style="padding:20px; align:bottom;"></p>
+				
+				Furthermore, we also see a unique pattern of vote responses in the data, namely that most votes are for a bill and very, very few are actually against a bill.
+				The following chart displays a breakdown of all the vote responses for all the bills:
+				
+				<p> <img src="templates/votePieAfter.png" alt="Mountain View", style="padding:20px; align:bottom;"></p>
 				
 				</li>
 				<li> <strong>Completeness of data</strong>: This data set is not yet complete. We are in the process of the collecting archival votes from previous convocations 
@@ -94,7 +104,7 @@
 			that additional information is gained from 3-d dimensional plots, and so we discarded this idea and stuck with only 2 latent dimensions for representing the parliamentarians. Outside of
 			that, fellow researchers like the ability to switch between different groupings and convocations. The only thing that was still desired that we were not able to implement
 			was to display some kind of numerical measure of differences between different coefficient of similairites, or grouping algorithms, (like an adjusted rand index), next to the visual 
-			displays to get a better understanding of the differences between methods.
+			displays to get a better understanding of the differences between methods. I have also recieved feedback to include some different coloring methods, such as Louvain clustering. 
 			</p>
       	</div>
       	
