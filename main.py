@@ -36,6 +36,16 @@ def index():
 def about():
     template = JINJA_ENVIRONMENT.get_template('templates/about.html')
     return template.render()
+    
+@app.route('/explore')
+def explore():
+    template = JINJA_ENVIRONMENT.get_template('templates/explore.html')
+    return template.render()
+    
+@app.route('/attribute')
+def attribute():
+    template = JINJA_ENVIRONMENT.get_template('templates/attribute.html')
+    return template.render()
 
 @app.errorhandler(404)
 def page_not_found(e):

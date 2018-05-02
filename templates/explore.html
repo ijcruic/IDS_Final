@@ -37,6 +37,8 @@
 			<li><a href="explore">Exploratory Data Visualization</a></li>
 			<li><a href="attribute">Attribute Analysis</a></li>
           </ul>
+
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -64,8 +66,9 @@
 	  	  <div style="padding: 10px; float:left">
 	      	 <p><strong>Select Coloring for Points</strong></p>
 	      	 <select id="coloring">
+	      	 	 <option value="knn_modularity" selected="selected">kNN Newtork Modularity</option>
 		    	 <option value="mean_shift">Mean Shift</option>
-		    	 <option value="gmm" selected="selected">Guassian Mixture Model</option>
+		    	 <option value="gmm">Guassian Mixture Model</option>
 		    	 <option value="Party">Formal Party</option>
 		    	 <option value="Election">Election Method</option>
 		     </select>
@@ -255,7 +258,7 @@ rect {
 		    .tickSize(-width);
 		    
 		var metric = "gowers";
-		var colorSource = "gmm";
+		var colorSource = "knn_modularity";
 		
 		var xCat = metric+"_x",
 		    yCat = metric+"_y",
