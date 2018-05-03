@@ -122,18 +122,19 @@
       		on the affinity matrices, or collection of pairwise similarities between the parliamentarians. I have also included the ability
       		to color by their formal party or faction memberships, and by whether they were elected to a local constituency seat or a national party seat in the parliament
       		for comparison to the those factions identified by spatial methods.
+      			<ul>
+      			<li>Of particular note is the <a href="https://arxiv.org/pdf/1602.01016">kNN modularity</a>. This method is very complementary to Gower's Method and is the preferred final clustering for Gower's.
+      			kNN modularity first contructs a graph by connecting each point by its k nearest neighbors, as determined by the affinity matrix from the
+      			positioning method. It then uses the <a href="https://en.wikipedia.org/wiki/Louvain_Modularity">Louvain Method</a> of graph clustering to get the subgroups. This procedure is repeated for various k's until a graph and 
+      			clustering is found that maximizes the <a href="https://en.wikipedia.org/wiki/Modularity_(networks)">modularity</a>.</li>
+      			</ul>
       		</li>
       	</ul>
-      	<h4>Some inital, interesting findings..</h4>
+      	<h4>Some inital, interesting findings...</h4>
       	<p>From a preliminary look at the different spatial positions of the parliamentarians, as detrmined by the ir voting behaviour, a couple of interesting
       	patterns and anomalies present themselves. Below is a list of just a few:
       	</p>
       	<ul>
-      		<li> In convocation 8, using the Specially Weighted Gower's Coefficient, and then clustering with Mean Shift, finds 
-      		the parliamentarian Bezbakh Yakov Yakovlevich as existing in his very own sub group. While its not entirely clear why this is,
-      		it appears he is something of a wildcard is voting patterns and from his connections on his public Facebook page. It
-      		would seem that the Specially Weighted Gower's Coefficient is the only method that picks this up.
-      		</li>
       		<li> In convocation 5, there is a distinct split between parties, as seen by both Jaccard and Gower's along supporting 
       		<a href="https://en.wikipedia.org/wiki/2006_Ukrainian_political_crisis">Yulia Tymoshenko</a>. This was a well documented period
       		of crisis for the parliament as well.
@@ -144,7 +145,11 @@
       		in these groups may have been salient in causing the emergency election in 2007.
       		</li>
       		<li> In pretty much all circumstances, assuming a binary vote response and using a more traditional distance measure like Hamming Distance,
-      		results in almost uniform distances between parliamentarians, and no good way of seeing any differences between them.
+      		results in more uniform distances between parliamentarians, and no good way of seeing any differences between them. Assuming binary voting loses important
+      		information that distinguishes the behavior of parliamentarians from each other.
+      		</li>
+      		<li> The kNN modularity finds many more, smaller cohesive groups than the other clustering techniques. This could be good or bad depending 
+      		on what level of factions one is looking for. It also seems like kNN modularity is a lot closer to the formal parties of the parliament as well.
       		</li>
       	</ul>
       </div>
