@@ -1,4 +1,22 @@
-.btn-space {
-    margin-right: 5px;
-    margin-bottom: 5px;
+#thumbs {   
+    width: 1200px;
+    margin-top:20px;
+    margin-left: auto; 
+    margin-right: auto;
+
+     text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+}
+#thumbs a {
+    vertical-align: top;
+    display: inline-block;
+    display: inline;
+    zoom: 1;
+}
+.stretch {
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
 }
