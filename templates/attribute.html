@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Iain J. Cruickshank">
     <link rel="icon" href="favicon.ico">
     <title>Index</title>
     <!-- Bootstrap core CSS -->
@@ -55,13 +55,166 @@
       <div class="page-header">
 	
       </div> <!-- /page-header -->
-      
-      <div id="other-map" style="padding: 10px; float:left; width:100%;"></div>
-		  
-		  <div style="width: 100%; overflow: hidden;">
-	      	<h4>Instructions</h4>
-	      	
-	      </div>
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>3rd Convocation (1998-2002)</h3>
+      	</div>
+      	
+      	<div id="convocation_3" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: information gain</li>
+      			<li>Faction Labels: kNN Modualrity</li>
+      			<li>Mean cross validation accuracy: 0.52</li>
+      			<li>Accuracy: 0.61</li>
+      			<li>Precision: 0.53</li>
+      			<li>Recall: 0.61</li>
+      			<li>Missing Attributes: Age</li>
+      		</ul>
+      		<p> Using the kNN modularity labels in this case gives a lot of granularity on different possible voting factions, but 
+      		impacts the accuracy of the decision tree considerably. Using a different clustering, however, produces too coarse of labels that provide
+      		very little in the way of interpretation. In the 3rd convocation, it would seem formal party membership is the most salient factor in
+      		voting faction behavior. Most of the factions are seperated out along the decision tree in the first few leaves by formal party. Furthermore,
+      		the top 5 features by importance in the decision tree are all parties (Social Democratic: 0.12, Communist Party: 0.105, Ukrainian People's Movement: 0.966,
+      		Socialist Party: 0.87, Green Party: 0.79). Forthose factions primarily composed of Communist Party members, it would seem committee and age become 
+      		major distinguishers for voting faction. Overall, it would seem the major driving attribute for the 3rd convocation was party affiliation.
+      		</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>4th Convocation (2002-2006)</h3>
+      	</div>
+      	
+      	<div id="convocation_4" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: Gini Index</li>
+      			<li>Faction Labels: kNN Modualrity</li>
+      			<li>Mean cross validation accuracy: 0.46</li>
+      			<li>Accuracy: 0.56</li>
+      			<li>Precision: 0.48</li>
+      			<li>Recall: 0.56</li>
+      			<li>Missing Attributes: None</li>
+      		</ul>
+      		<p> Once again, using kNN modularity as the clustering provides more explanability, but less accuracy for attribute 
+      		relation to voting factions. As with previous convocation, formal party once again plays a primary role, but we now observe some 
+      		other attributes, like committee and election source playing larger role. Also, as with the previous convocations, those factions primarily
+      		composed of Communist party members tend to break into sub factions by committee. For those factions primarily composed of parties other than
+      		Communist or Our Ukraine, whether the parliamentarian was elected by consistuentcy or national election becomes important in voting factions.
+      		</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>5th convocation (2006-2007)</h3>
+      	</div>
+      	
+      	<div id="convocation_5" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: Gini Index</li>
+      			<li>Faction Labels: Mean Shift</li>
+      			<li>Mean cross validation accuracy: 0.795</li>
+      			<li>Accuracy: 0.87</li>
+      			<li>Precision: 0.85</li>
+      			<li>Recall: 0.87</li>
+      			<li>Missing Attributes: Profession</li>
+      		</ul>
+      		<p> The 5th convocation looks to be a very different convocation. In this case, since the votes were divisive enough, Mean 
+      		Shift produced groupings that were a good trade off between accuracy adn explainability, and so mean shift clustering labels
+      		were used instead of kNN Modularity clustering labels. In this decision tree the most important attributes shifted from all parties
+      		to wether a parliamentarian served a full session (0.67), and age (0.037), along with some of the formal parties. Looking at 
+      		the actual decision tree, it seems factions tended to form around gender across the entire parliament. For those factions 
+      		that had most of the parliamentarians serve their full terms, age and committee seem to be the major splitting attributes. Whereas,
+      		for those factions composed of parliamentarians that did not serve their full terms, some of the committees and age tend to be
+      		the major factioning attributes. Thus, the 5th convocation, which wasn note historically as being a troubled convovcation
+      		shows some marked differences in voting behavior and the possible parliamentarian attributes that contribute to faction formation.
+      		</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>6th Convocation (2007-2012)</h3>
+      	</div>
+      	<div id="convocation_6" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: Gini Index</li>
+      			<li>Faction Labels: kNN Modularity</li>
+      			<li>Mean cross validation accuracy: 0.348</li>
+      			<li>Accuracy: 0.502</li>
+      			<li>Precision: 0.50</li>
+      			<li>Recall: 0.50</li>
+      			<li>Missing Attributes: Election Type</li>
+      		</ul>
+      		<p> The 6th convocation proved to be one of the more difficult to produce a decision tree for. Accuracy was markedly low
+      		for a decision tree model for this convocation. From the decision tree, it would appear some membership in some parties 
+      		appear to be salient in faction membership. For example, being a member of the communist party tended to be a major splitting attribute for some
+      		factions. For those individuals that were part of the Party of Regions, it would appear age and wether you were considered a professional
+      		politician were the important points for voting faction assignment. The importance of being labeled a professional politician was also 
+      		present in the decision tree's most important attributes, as having the profession of politician was the most important attribute behind prominent parties
+      		like Party of Regions and Communist Party.</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>7th Convocation (2012-2014)</h3>
+      	</div>
+      	<div id="convocation_7" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: inforamtion gain</li>
+      			<li>Faction Labels: kNN Modularity</li>
+      			<li>Mean cross validation accuracy: 0.467</li>
+      			<li>Accuracy: 0.75</li>
+      			<li>Precision: 0.77</li>
+      			<li>Recall: 0.75</li>
+      			<li>Missing Attributes: None</li>
+      		</ul>
+      		<p> The 7th Convocation produced a morea accurate, and also more complex, decision tree. From the 10 fold cross-validation,
+      		the decision tree model was able to have greater compelxity in the tree without much loss in generality. The most important 
+      		attributes for this tree were four of the main formal parties (All-Ukrainian Association (Svoboda): 0.1159, UDAR:0.111, 
+      		All-Ukrainian Association (Fatherland): .08174, and Communist Party: .08) as well as wether the parliamentarian served a full term
+      		and age. From the general trend of the decision tree, for those members of the All-Ukrainian Association (Fatherland) and Communist Party, the committee tended
+      		to be an important splitting attribute. For those individuals not in the All-Ukrainian Association (Fatherland) and UDAR parties,
+      		committee, age, and even gender could be a decising factor for faciton membership.
+      		</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h3>8th Convocation (2014-Present)</h3>
+      	</div>
+      	<div id="convocation_8" style="padding: 10px; float:left; width:100%;"></div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<ul>
+      			<li>Splitting criteria: inforamtion gain</li>
+      			<li>Faction Labels: kNN Modularity</li>
+      			<li>Mean cross validation accuracy: 0.35</li>
+      			<li>Accuracy: 0.47</li>
+      			<li>Precision: 0.45</li>
+      			<li>Recall: 0.48</li>
+      			<li>***Added Attributes: Whether Parliamentarian has Facebook or Twitter</li>
+      		</ul>
+      		<p> The current convocation also proved to be a difficult convocation to determine factions within and to fit a decision
+      		tree based on parliamentarian attributes to voting factions. There was shift in important attributes from primarily parties
+      		to two of the prominent parties (Peter Porschenko Bloc: 0.186, and Union (SAMOPOMICH): .137), and whether the Parliamentarian
+      		served a full term and age being the prominent splitting attributes. Looking at the decision tree it appears once again that
+      		committee is the important splitting factor for the members of the Communist party. For the Our Ukraine party, whether you were elected
+      		by a constituency (versus from national elections), and whether you served a full session or not tended to determine your voting faction.
+      		</p>
+      	
+      	</div>
+      	
+      	<div style="width: 100%; overflow: hidden;">
+      		<h2>Concluding Thoughts</h2>
+      	</div>
       </div>
 		
 		<div class="panel-footer">
@@ -88,9 +241,9 @@
 	<script>
     $( document ).ready(function(){
     	
-    	var imgHeight = 100, imgWidth = 300,    // Image dimensions (don't change these)
+    	var imgHeight = 500, imgWidth = 1400,    // Image dimensions (don't change these)
 		    width =  1500, height = 500;           // Dimensions of cropped region
-		    offsetX = 0, offsetY = 0;       // Initial offset -- tweaked this to center Nigeria in <div>
+		    offsetX = -200, offsetY = 0;       // Initial offset -- tweaked this to center Nigeria in <div>
 		    
 		
 		svg_3 = d3.select("#convocation_3")
@@ -128,6 +281,90 @@
 
 		function zoom_4() {
 		  svg_4.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
+		}
+		
+		
+		
+		svg_5 = d3.select("#convocation_5")
+			.append("svg")
+		    .style("width",  width + "px")
+		    .style("height", height + "px")
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_5))
+		  	.append("g");
+		
+		svg_5.append("image")
+		    .attr("width",  imgWidth + "px")
+		    .attr("height", imgHeight + "px")
+		    .attr("x", offsetX + "px")
+		    .attr("y", offsetY + "px")
+		    .attr("xlink:href", "templates/convocation_5.png");
+
+		function zoom_5() {
+		  svg_5.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
+		}
+		
+		
+		
+		svg_6 = d3.select("#convocation_6")
+			.append("svg")
+		    .style("width",  width + "px")
+		    .style("height", height + "px")
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_6))
+		  	.append("g");
+		
+		svg_6.append("image")
+		    .attr("width",  imgWidth + "px")
+		    .attr("height", imgHeight + "px")
+		    .attr("x", offsetX + "px")
+		    .attr("y", offsetY + "px")
+		    .attr("xlink:href", "templates/convocation_6.png");
+
+		function zoom_6() {
+		  svg_6.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
+		}
+		
+		
+		
+		svg_7 = d3.select("#convocation_7")
+			.append("svg")
+		    .style("width",  width + "px")
+		    .style("height", height + "px")
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_7))
+		  	.append("g");
+		
+		svg_7.append("image")
+		    .attr("width",  imgWidth + "px")
+		    .attr("height", imgHeight + "px")
+		    .attr("x", offsetX + "px")
+		    .attr("y", offsetY + "px")
+		    .attr("xlink:href", "templates/convocation_7.png");
+
+		function zoom_7() {
+		  svg_7.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
+		}
+		
+		
+		
+		svg_8 = d3.select("#convocation_8")
+			.append("svg")
+		    .style("width",  width + "px")
+		    .style("height", height + "px")
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_8))
+		  	.append("g");
+		
+		svg_8.append("image")
+		    .attr("width",  imgWidth + "px")
+		    .attr("height", imgHeight + "px")
+		    .attr("x", offsetX + "px")
+		    .attr("y", offsetY + "px")
+		    .attr("xlink:href", "templates/convocation_4.png");
+
+		function zoom_8() {
+		  svg_8.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
 		}
 
