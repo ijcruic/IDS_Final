@@ -47,7 +47,7 @@
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
-	      <h2>About This Method</h2>
+	      <h1>About This Method</h1>
 				<p>The fundamental theory behind this analysis that individual's behavior, expecially shared beahviour with other indivdiuals,
 		      	leads to the formation of social groups. In this case, we are taking voting behavior as the driving behavior for the formation
 		      	of political groups within a political body. This approach is not a new one. There have been methods employed to find facitons through voting behavior
@@ -73,7 +73,8 @@
 				<li> <strong>Accountability of this data</strong>: Since the actualy roll call voting results come directly from the official, digital records of
 				the Ukrainian  palriament, the data can be traced to the source and has regulations guiding its correct reporting. As for the attributes, since these have been colelcted from various
 				sources, some official like the Ukrainian Parliament's website and some unofficial like public facing blogs or facebook pages, the data is not neecesarily
-				strongly ties to the underlying phenomenon and could be subject to change at different measurement intervals. 
+				strongly ties to the underlying phenomenon and could be subject to change at different measurement intervals. So, in sum total there is a chain of accountability for the actual voting data,
+				but not one for the parliamentarian attribute data.
 				</li>
 				<li> <strong>Coherence of data</strong>: There have been no identified coherence issues with the roll call data. The distributions of vote repsonses matches what our
 				subject matter experts have told us to expect (i.e. mostly 'yay' votes, with a good number of 'abstain' votes and very few
@@ -95,6 +96,16 @@
 			</ul>
 		
 		</div>
+		
+		<div class="page-header">
+			<h2>Cleaning the Data</h2>
+			<p> To clean the voting data, only one step was performed. When we analyzed the data for coherence, we found a small to moderate percetnage of votes (8-20%) where every parliamentarian registered
+			a 'did not vote' response. After consulting with a subject matter expert, who clarified these are a typically procedural type of vote that does not hold much meaning, we decided to remove all votes
+			from the voting datasets that had every response as 'did not vote.'</p>
+			<p> To clean the attribute data, a couple of steps were performed. First, for any parliamentarian that did not have any attribute data (there were 5 accross all convocations), they were dropped from the data set.
+			For any parlaimentarian where his or her formal party or committee were unknown, they were assigned to the 'None' category. And, for the 8th convocation, any parliamentarian that a public facing Facebook page or a Twitter
+			account, they were given a 1 in the corresponding attribute column, and if they did not have one or either, a 0 in the corresponding attribute column.</p>
+      	</div>
 		
 		<div class="page-header">
 			<h2>Initial User Feedback</h2>
