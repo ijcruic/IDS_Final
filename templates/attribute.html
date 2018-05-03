@@ -49,7 +49,13 @@
       <div class="jumbotron" >
 		<h1>Homophilly and Faction Formation in the Ukrainian Parliament</h1>
         <h3><strong>Do the attributes of individuals parliamentarians contribute to the voting factions they associate with?</strong></h3>
-        <p> Homophilly</p>
+        <p> Two of the main social science theories behind group formation are shared behavior and homophilly. We have created factions from
+        voting data based on the theory of shared behavior. We would now like to see if any of the parliamentarian attributes also create the same
+        factions. To do this, we will need a learned model that maintains good accuracy <em>and</em> good explainability. So, we will be using a classification
+        decision tree model. Each of the following trees were built using the Sci-Kit Learn decision tree classifier with 10-fold crossvalidation to find the appropriate
+        parameters for the tree. Unless otherwise noted, the parliamentarian features that were considered when building each tree were their formal party, age, profession,
+        whether they were elected to parliament from a consistuency or a national election, whether they served the full term, gender, and highest education level achieved.
+        </p>
       </div>
       
       <div class="page-header">
@@ -149,7 +155,7 @@
       			<li>Accuracy: 0.502</li>
       			<li>Precision: 0.50</li>
       			<li>Recall: 0.50</li>
-      			<li>Missing Attributes: Election Type</li>
+      			<li>Missing Attributes: Election Type, Party</li>
       		</ul>
       		<p> The 6th convocation proved to be one of the more difficult to produce a decision tree for. Accuracy was markedly low
       		for a decision tree model for this convocation. From the decision tree, it would appear some membership in some parties 
@@ -176,7 +182,7 @@
       			<li>Recall: 0.75</li>
       			<li>Missing Attributes: None</li>
       		</ul>
-      		<p> The 7th Convocation produced a morea accurate, and also more complex, decision tree. From the 10 fold cross-validation,
+      		<p> The 7th Convocation produced a morea accurate, and also more complex, decision tree. From the 10-fold crossvalidation,
       		the decision tree model was able to have greater compelxity in the tree without much loss in generality. The most important 
       		attributes for this tree were four of the main formal parties (All-Ukrainian Association (Svoboda): 0.1159, UDAR:0.111, 
       		All-Ukrainian Association (Fatherland): .08174, and Communist Party: .08) as well as wether the parliamentarian served a full term
@@ -215,6 +221,15 @@
       	<div style="width: 100%; overflow: hidden;">
       		<h2>Concluding Thoughts</h2>
       	</div>
+      	<p> From the analysis of the attributes and factions identified from voting behavior, a couple of key points stand out. Formal parties,
+      	while often not a good indicator of how a Ukrianian Palriamentarian will vote on any given bill, it is a good attribute for determining factions
+      	and could be used a proxy for voting factions. Secondly, niche clustering methods like kNN modularity can pick out very small and nuanced clusters
+      	when the data is very noisy, but the semantic meaning of the smaller clusters may be irrelevant and indistuishable from other smaller clusters; the method
+      	may over-cluster the data in the presence of npoisy data. Third, we have treated all votes as the same and did not take into account the evolutionary nature
+      	of factions with the voting data. It is very likely that not all votes are created equal and that there are other dimensions that affect faction formation, which 
+      	if included by methods like Gower's method, could substantially improve faction identification. Overall, it does seem like their is some evidence for both shared 
+      	behavior and homophilly when it comes to faction formation in the Ukrainian Parliament. 
+      	</p>
       </div>
 		
 		<div class="panel-footer">
