@@ -56,7 +56,7 @@
 	
       </div> <!-- /page-header -->
       
-      <div id="map" style="padding: 10px; float:left; width:100%;"></div>
+      <div id="tree-map" style="padding: 10px; float:left; width:100%;"></div>
 		  
 		  <div style="width: 100%; overflow: hidden;">
 	      	<h4>Instructions</h4>
@@ -91,8 +91,9 @@
     	var imgHeight = 100, imgWidth = 300,    // Image dimensions (don't change these)
 		    width =  1500, height = 500;           // Dimensions of cropped region
 		    offsetX = 0, offsetY = 0;       // Initial offset -- tweaked this to center Nigeria in <div>
+		    
 		
-		svg = d3.select("#map")
+		svg = d3.select("#tree-map")
 			.append("svg")
 		    .style("width",  width + "px")
 		    .style("height", height + "px")
