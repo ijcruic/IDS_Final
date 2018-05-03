@@ -56,7 +56,7 @@
 	
       </div> <!-- /page-header -->
       
-      <div id="tree-map" style="padding: 10px; float:left; width:100%;"></div>
+      <div id="other-map" style="padding: 10px; float:left; width:100%;"></div>
 		  
 		  <div style="width: 100%; overflow: hidden;">
 	      	<h4>Instructions</h4>
@@ -93,22 +93,41 @@
 		    offsetX = 0, offsetY = 0;       // Initial offset -- tweaked this to center Nigeria in <div>
 		    
 		
-		svg = d3.select("#tree-map")
+		svg_3 = d3.select("#convocation_3")
 			.append("svg")
 		    .style("width",  width + "px")
 		    .style("height", height + "px")
-		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_3))
 		  	.append("g");
 		
-		svg.append("image")
+		svg_3.append("image")
 		    .attr("width",  imgWidth + "px")
 		    .attr("height", imgHeight + "px")
 		    .attr("x", offsetX + "px")
 		    .attr("y", offsetY + "px")
-		    .attr("xlink:href", "templates/about_button.png");
+		    .attr("xlink:href", "templates/convocation_3.png");
+
+		function zoom_3() {
+		  svg_3.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
+		}
 		
-		function zoom() {
-		  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		svg_4 = d3.select("#convocation_4")
+			.append("svg")
+		    .style("width",  width + "px")
+		    .style("height", height + "px")
+		    	.call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom_4))
+		  	.append("g");
+		
+		svg_4.append("image")
+		    .attr("width",  imgWidth + "px")
+		    .attr("height", imgHeight + "px")
+		    .attr("x", offsetX + "px")
+		    .attr("y", offsetY + "px")
+		    .attr("xlink:href", "templates/convocation_4.png");
+
+		function zoom_4() {
+		  svg_4.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 		  console.log("translate: " + d3.event.translate + ", scale: " + d3.event.scale);
 		}
 
